@@ -1,13 +1,14 @@
 (ns clj-asteroids.core
   (:import [javax.swing JFrame JPanel]
-           [java.awt Dimension Color]
-           [java.awt.image BufferedImage]))
+           [java.awt Dimension Color]))
+
 
 (defn my-display []
-  (let [display (proxy [javax.swing.JPanel] []
-                  (paintComponent [g]
-                    (proxy-super paintComponent g)))]
-    display))
+  (proxy [JPanel] []
+    (paintComponent [g]
+      (proxy-super paintComponent g)
+      (doto g
+        (.fillRect 30 30 100 100)))))
 
 
 (defn my-panel []
