@@ -1,12 +1,21 @@
 (ns clj-asteroids.core
-  (:import [javax.swing JFrame JPanel JLabel]
-           [java.awt Dimension]))
+  (:import [javax.swing JFrame JPanel]
+           [java.awt Dimension Color]
+           [java.awt.image BufferedImage]))
+
+(defn my-display []
+  (let [display (proxy [javax.swing.JPanel] []
+                  (paintComponent [g]
+                    (proxy-super paintComponent g)))]
+    display))
+
 
 (defn my-panel []
-  (let [panel (JPanel.)
-        label (JLabel. "Hello")]
+  (let [panel (JPanel.)]
     (doto panel
-      (.add label)
+      (.setFocusable true)
+      (.add (my-display))
+      (.setBackground (Color/black))
       (.setPreferredSize (Dimension. 800 600)))
     panel))
 
